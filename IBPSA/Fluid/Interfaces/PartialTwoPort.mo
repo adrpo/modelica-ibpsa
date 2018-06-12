@@ -9,18 +9,16 @@ partial model PartialTwoPort "Partial component with two ports"
     "= false to simplify equations, assuming, but not enforcing, no flow reversal"
     annotation(Dialog(tab="Assumptions"), Evaluate=true);
 
-  Modelica.Fluid.Interfaces.FluidPort_a port_a(
+  IBPSA.Fluid.Interfaces.FluidPort_a port_a(
     redeclare final package Medium = Medium,
-     m_flow(min=if allowFlowReversal then -Modelica.Constants.inf else 0),
-     h_outflow(start = Medium.h_default))
+     m_flow(min=if allowFlowReversal then -Modelica.Constants.inf else 0))
     "Fluid connector a (positive design flow direction is from port_a to port_b)"
     annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
-  Modelica.Fluid.Interfaces.FluidPort_b port_b(
+  IBPSA.Fluid.Interfaces.FluidPort_b port_b(
     redeclare final package Medium = Medium,
-    m_flow(max=if allowFlowReversal then +Modelica.Constants.inf else 0),
-     h_outflow(start = Medium.h_default))
+    m_flow(max=if allowFlowReversal then +Modelica.Constants.inf else 0))
     "Fluid connector b (positive design flow direction is from port_a to port_b)"
-    annotation (Placement(transformation(extent={{110,-10},{90,10}})));
+    annotation (Placement(transformation(extent={{90,-10},{110,10}})));
 
   annotation (
     Documentation(info="<html>
