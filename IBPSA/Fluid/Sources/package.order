@@ -8,6 +8,9 @@ Outside
 Outside_CpLowRise
 PropertySource_T
 PropertySource_h
+Sink1Connector
+Sink_pT
+Source1Connector
 TraceSubstancesFlowSource
 Examples
 BaseClasses

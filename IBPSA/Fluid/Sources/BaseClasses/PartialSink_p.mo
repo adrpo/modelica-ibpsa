@@ -1,6 +1,6 @@
 within IBPSA.Fluid.Sources.BaseClasses;
-model PartialSource_p "Partial source with prescribed pressure"
-  extends IBPSA.Fluid.Sources.BaseClasses.PartialSource;
+model PartialSink_p "Partial sink with prescribed pressure"
+  extends IBPSA.Fluid.Sources.BaseClasses.PartialSink;
   parameter Boolean use_p_in = false
     "Get the pressure from the input connector"
     annotation(Evaluate=true, HideResult=true, Dialog(group="Conditional inputs"));
@@ -18,7 +18,6 @@ equation
   end if;
   for i in 1:nPorts loop
     ports[i].p + ports[i].r = p_in_internal;
-    ports[i].r = 0;
   end for;
 
   annotation (Documentation(revisions="<html>
@@ -56,4 +55,4 @@ Otherwise the parameter value is used.
           extent={{-150,110},{150,150}},
           textString="%name",
           lineColor={0,0,255})}));
-end PartialSource_p;
+end PartialSink_p;

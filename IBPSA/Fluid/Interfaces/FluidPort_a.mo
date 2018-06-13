@@ -6,13 +6,13 @@ connector FluidPort_a "Generic fluid connector at design inlet"
   flow Medium.MassFlowRate m_flow
     "Mass flow rate from the connection point into the component";
   Modelica.SIunits.Pressure r "Intertial pressure in the connection";
-  input Medium.AbsolutePressure p(start=Medium.p_default) "Absolute pressure in the connection point";
-  stream Medium.SpecificEnthalpy h_outflow(start=Medium.h_default)
-    "Specific thermodynamic enthalpy close to the connection point if m_flow < 0";
+  input Medium.AbsolutePressure p "Absolute pressure in the connection point";
+  stream Medium.SpecificEnthalpy h_outflow
+    "Specific thermodynamic enthalpy close to the connection point";
   stream Medium.MassFraction Xi_outflow[Medium.nXi]
-    "Independent mixture mass fractions m_i/m close to the connection point if m_flow < 0";
+    "Independent mixture mass fractions m_i/m close to the connection point";
   stream Medium.ExtraProperty C_outflow[Medium.nC]
-    "Properties c_i/m close to the connection point if m_flow < 0";
+    "Properties c_i/m close to the connection point";
 
   annotation (defaultComponentName="port_a",
               Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,

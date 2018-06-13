@@ -1,14 +1,7 @@
 within IBPSA.Fluid.Interfaces;
 partial model PartialTwoPortTransport
   "Partial element transporting fluid between two ports without storage of mass or energy"
-  extends IBPSA.Fluid.Interfaces.PartialTwoPort;
-
-  parameter Modelica.SIunits.Area A(start=0.1)
-    "Cross section area"
-    annotation(Dialog(tab = "Pressure inertia"));
-  parameter Modelica.SIunits.Length L(start=1)
-    "Length of fluid element"
-    annotation(Dialog(tab = "Pressure inertia"));
+  extends IBPSA.Fluid.Interfaces.PartialTwoPort(m_flow(start=m_flow_start));
 
   // Advanced
   // Note: value of dp_start shall be refined by derived model,
@@ -34,13 +27,9 @@ partial model PartialTwoPortTransport
     annotation(Dialog(tab="Advanced",group="Diagnostics"));
 
   // Variables
-  Medium.MassFlowRate m_flow(
-     min=if allowFlowReversal then -Modelica.Constants.inf else 0,
-     start = m_flow_start) "Mass flow rate in design flow direction";
   Modelica.SIunits.PressureDifference dp(start=dp_start,
                                          displayUnit="Pa")
     "Pressure difference between port_a and port_b (= port_a.p - port_b.p)";
-  Modelica.SIunits.PressureDifference dr "Inertia pressure difference (= port_a.r - port_b.r)";
 
   Modelica.SIunits.VolumeFlowRate V_flow=
       m_flow/Modelica.Fluid.Utilities.regStep(m_flow,
@@ -80,13 +69,7 @@ partial model PartialTwoPortTransport
 equation
   // Pressure drop in design flow direction
   dp = port_a.p - port_b.p;
-  // Inertia pressure balance
-  dr = der(m_flow)*L/A;
-  dr = port_a.r - port_b.r;
 
-
-  // Design direction of mass flow rate
-  m_flow = port_a.m_flow;
   assert(m_flow > -m_flow_small or allowFlowReversal,
       "Reverting flow occurs even though allowFlowReversal is false");
 

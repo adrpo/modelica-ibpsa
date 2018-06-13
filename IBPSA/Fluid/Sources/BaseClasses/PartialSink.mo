@@ -1,5 +1,5 @@
 within IBPSA.Fluid.Sources.BaseClasses;
-partial model PartialSource
+partial model PartialSink
   "Partial component source with one fluid connector"
 
   replaceable package Medium =
@@ -12,13 +12,14 @@ partial model PartialSource
     "Set to true to stop the simulation with an error if the medium temperature is outside its allowable range"
     annotation(Dialog(tab="Advanced"));
 
-  IBPSA.Fluid.Interfaces.FluidPorts_b ports[nPorts](
+  IBPSA.Fluid.Interfaces.FluidPorts_a ports[nPorts](
     redeclare each package Medium = Medium,
     m_flow(each max=if flowDirection == Modelica.Fluid.Types.PortFlowDirection.Leaving
              then 0 else +Modelica.Constants.inf,
            each min=if flowDirection == Modelica.Fluid.Types.PortFlowDirection.Entering
            then 0 else -Modelica.Constants.inf))
-    annotation (Placement(transformation(extent={{90,40},{110,-40}})));
+    annotation (Placement(transformation(extent={{110,40},{90,-40}}),
+        iconTransformation(extent={{110,40},{90,-40}})));
 
 protected
   parameter Modelica.Fluid.Types.PortFlowDirection flowDirection=Modelica.Fluid.Types.PortFlowDirection.Bidirectional
@@ -35,7 +36,6 @@ protected
   Modelica.Blocks.Interfaces.RealInput C_in_internal[Medium.nC](
     final quantity=Medium.extraPropertiesNames)
     "Needed to connect to conditional connector";
-
 
 initial equation
   // Only one connection allowed to a port to avoid unwanted ideal mixing
@@ -83,4 +83,4 @@ See <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/882\">#882</a>.
 </li>
 </ul>
 </html>"));
-end PartialSource;
+end PartialSink;

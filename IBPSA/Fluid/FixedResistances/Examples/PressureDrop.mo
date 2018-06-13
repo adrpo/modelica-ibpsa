@@ -20,7 +20,7 @@ model PressureDrop
     annotation (Placement(transformation(
           extent={{-50,-10},{-30,10}})));
 
-  IBPSA.Fluid.Sources.Boundary_pT sin(
+  Sources.Sink_pT                 sin(
     redeclare package Medium = Medium,
     T=273.15 + 10,
     nPorts=1,

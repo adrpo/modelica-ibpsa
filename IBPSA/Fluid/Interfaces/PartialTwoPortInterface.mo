@@ -3,7 +3,8 @@ partial model PartialTwoPortInterface
   "Partial model transporting fluid between two ports without storing mass or energy"
   extends IBPSA.Fluid.Interfaces.PartialTwoPort(
     port_a(p(start=Medium.p_default)),
-    port_b(p(start=Medium.p_default)));
+    port_b(p(start=Medium.p_default)),
+    m_flow(start=_m_flow_start));
 
   parameter Modelica.SIunits.MassFlowRate m_flow_nominal
     "Nominal mass flow rate"
@@ -16,10 +17,7 @@ partial model PartialTwoPortInterface
     "= true, if actual temperature at port is computed"
     annotation(Dialog(tab="Advanced",group="Diagnostics"));
 
-  Modelica.SIunits.MassFlowRate m_flow(start=_m_flow_start) = port_a.m_flow
-    "Mass flow rate from port_a to port_b (m_flow > 0 is design flow direction)";
-
-  Modelica.SIunits.PressureDifference dp(start=_dp_start, displayUnit="Pa") = port_a.p - port_b.p
+  Modelica.SIunits.PressureDifference dp(start=_dp_start, displayUnit="Pa")
     "Pressure difference between port_a and port_b";
 
   Medium.ThermodynamicState sta_a=
@@ -40,6 +38,8 @@ protected
   final parameter Modelica.SIunits.PressureDifference _dp_start(displayUnit="Pa") = 0
   "Start value for dp, used to avoid a warning if not set in dp, and to avoid dp.start in parameter window";
 
+equation
+  dp = port_a.p - port_b.p;
   annotation (
     preferredView="info",
     Documentation(info="<html>

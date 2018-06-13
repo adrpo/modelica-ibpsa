@@ -1,5 +1,9 @@
 UsersGuide
 ConservationEquation
+FluidPort_a
+FluidPort_b
+FluidPorts_a
+FluidPorts_b
 FourPortHeatMassExchanger
 PartialFourPort
 PartialFourPortInterface
@@ -17,7 +21,3 @@ FourPortFlowResistanceParameters
 LumpedVolumeDeclarations
 TwoPortFlowResistanceParameters
 Examples
-FluidPort_a
-FluidPort_b
-FluidPorts_b
-FluidPorts_a

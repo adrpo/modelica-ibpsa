@@ -22,7 +22,7 @@ model PressureDropsSeries "Test of multiple resistances in series"
       annotation (Placement(transformation(
           extent={{-40,20},{-20,40}})));
 
-  IBPSA.Fluid.Sources.Boundary_pT sin(
+  Sources.Sink_pT                 sin(
     redeclare package Medium = Medium,
     T=273.15 + 10,
     nPorts=1,

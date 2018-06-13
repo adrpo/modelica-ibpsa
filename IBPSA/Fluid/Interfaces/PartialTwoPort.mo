@@ -9,6 +9,13 @@ partial model PartialTwoPort "Partial component with two ports"
     "= false to simplify equations, assuming, but not enforcing, no flow reversal"
     annotation(Dialog(tab="Assumptions"), Evaluate=true);
 
+  parameter Modelica.SIunits.Area A(start=0.1)
+    "Cross section area"
+    annotation(Dialog(tab = "Pressure inertia"));
+  parameter Modelica.SIunits.Length L(start=1)
+    "Length of fluid element"
+    annotation(Dialog(tab = "Pressure inertia"));
+
   IBPSA.Fluid.Interfaces.FluidPort_a port_a(
     redeclare final package Medium = Medium,
      m_flow(min=if allowFlowReversal then -Modelica.Constants.inf else 0))
@@ -19,6 +26,18 @@ partial model PartialTwoPort "Partial component with two ports"
     m_flow(max=if allowFlowReversal then +Modelica.Constants.inf else 0))
     "Fluid connector b (positive design flow direction is from port_a to port_b)"
     annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+
+  Medium.MassFlowRate m_flow(
+     min=if allowFlowReversal then -Modelica.Constants.inf else 0) "Mass flow rate in design flow direction";
+
+  Modelica.SIunits.PressureDifference dr "Inertia pressure difference (= port_a.r - port_b.r)";
+
+equation
+  // Design direction of mass flow rate
+  m_flow = port_a.m_flow;
+    // Inertia pressure balance
+  dr = der(m_flow)*L/A;
+  dr = port_a.r - port_b.r;
 
   annotation (
     Documentation(info="<html>
